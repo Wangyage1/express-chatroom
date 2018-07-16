@@ -42,6 +42,11 @@
         
     })
 
+    var color;
+    $('#color').change((e) => {
+        color =  e.target.value;
+    })
+
     $('#sendMsg').click(() => {
         var sendMsg = $('#input-area').val().trim();
         if (sendMsg) {
@@ -60,7 +65,7 @@
             <img src="${data.userAvatar}">
             <div>
                 <span>${data.user}</span>
-                <p style="color: black">${data.msg}</p>
+                <p style="color: ${color}">${data.msg}</p>
             </div>
         </li>`;
         $('#messages').append(item)
@@ -75,5 +80,6 @@
         $('#messages').append(info)
     })
 
+   
 
 })();

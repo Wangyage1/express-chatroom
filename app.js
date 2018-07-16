@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         io.emit('system', {
-            user: socket.userInfo.username,
+            user: socket.userInfo && socket.userInfo.username,
             state: 1 //下线
         })
     })

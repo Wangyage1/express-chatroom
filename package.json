@@ -1,12 +1,11 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
+  "name": "express-chatroom",
+  "version": "1.0.0",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "ejs": "*",
+    "ejs": "^2.6.1",
     "express": "3.2.2",
     "socket.io": "^2.1.1"
   }

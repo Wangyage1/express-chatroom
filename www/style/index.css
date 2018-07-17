@@ -127,8 +127,8 @@ p.system span {
     vertical-align: bottom;
 }
 #messages li p .sendImg {
-    max-width: 300px;
-    max-height: 188px;
+    max-width: 270px;
+    max-height: 172px;
     width: auto;
     height: auto;
     border-radius: 5px;
@@ -224,7 +224,7 @@ form {
         left: 0;
     }
 }
-.edit #file {
+.edit #upload-img {
     width: 32.36px;
     height: 29px;
     opacity: 0;

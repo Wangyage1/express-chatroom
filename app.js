@@ -60,14 +60,15 @@ io.on('connection', (socket) => {
     });
 
     //监听客户端发送过来的消息，
-    socket.on('sendMsg', (msg) => {
+    socket.on('sendMsg', (data) => {
         
         //广播给自己
         socket.emit('receiveMsg', {
             user: socket.userInfo.username,
             userAvatar: socket.userInfo.img,
-            msg: msg,
-            type: 'text',
+            msg: data.msg,
+            type: data.type,
+            src: data.src,
             isMe: true
         })
 
@@ -75,8 +76,9 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('receiveMsg', {
             user: socket.userInfo.username,
             userAvatar: socket.userInfo.img,
-            msg: msg,
-            type: 'text',
+            msg: data.msg,
+            type: data.type,
+            src: data.src,
             isMe: false
         })
     })
@@ -85,7 +87,14 @@ io.on('connection', (socket) => {
         io.emit('system', {
             user: socket.userInfo && socket.userInfo.username,
             state: 1 //下线
-        })
+        });
+        if (socket.userInfo && onlineUsers.length) {
+            onlineUsers = socket.userInfo &&  onlineUsers.filter((item) => {
+                return item.username !== socket.userInfo.username
+            })
+        }
+        //更新在线人员列表
+        io.emit('displayUser', onlineUsers);
     })
 
 

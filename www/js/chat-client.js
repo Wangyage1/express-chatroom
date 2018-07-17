@@ -68,12 +68,22 @@
         var pos = data.isMe ? 'right' : 'left';
         var item;
         if (data.type === 'text') {
+            //监测是否包含表情
+            var msg = data.msg;
+            if(msg.indexOf('[emoji') > -1) {
+                //包含小表情
+                while(msg.indexOf('[emoji') > -1) {
+                    start = msg.indexOf('[emoji');
+                    end = msg.indexOf(']');
+                    msg = msg.substring(0, start) + `<img src="/image/emoji/emoji (${msg.substring(start + 6, end)}).png" />` + msg.substring(end + 1);
+                }
+            }
             item =  `
                 <li class='${pos}'>
                 <img src="${data.userAvatar}">
                 <div>
                     <span>${data.user}</span>
-                    <p style="color: ${color}">${data.msg}</p>
+                    <p style="color: ${color}">${msg}</p>
                 </div>
             </li>`;
         } else if (data.type === 'img') {
@@ -122,6 +132,35 @@
         }
     })
 
-   
+   //展示小表情
+    $('#smile').click(() => {
+        $('.emoji').html('');
+        for(var i = 1; i< 142; i++) {
+            var src = '/image/emoji/emoji (' + i + ').png';
+            var item = `<li class='emoji-item'><img src="${src}" /> </li>`;
+            $('.emoji').append(item);
+        } 
+        if($('.selectBox').css('display') === 'none' ) {
+            $('.selectBox').css('display', 'block')
+        } else {
+            $('.selectBox').css('display', 'none')
+        }
+    })
+    
+    //点选小表情
+    $('.emoji').click((e) => {
+        
+        $('.selectBox').css('display', 'none');
+        //获取点选小表情的src
+        var src = e.target.src;
+        if (src) {
+            var pos1 = src.indexOf('(') + 1;
+            var pos2 = src.indexOf(')');
+            src = src.substring(pos1, pos2);
+            var val = $('#input-area').val();
+            $('#input-area').val(val + '[emoji'+ src +']');
+        }
+        
+    })
 
 })();
